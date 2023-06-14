@@ -65,7 +65,7 @@ actions.send_keys(fakeName).send_keys(Keys.TAB).send_keys(fakeName).send_keys(Ke
 actions.send_keys(Keys.TAB).send_keys(fake.city()).send_keys(Keys.TAB).send_keys(fake.city()).send_keys(Keys.TAB).perform()
 actions.send_keys("1234").send_keys(Keys.TAB).send_keys("+905555555555").send_keys(Keys.TAB).click().perform()
 
-
+#There is some problem in actions section, Maybe its about chrome options
 
 # 14. Verify that 'ACCOUNT CREATED!' is visible
 # 15. Click 'Continue' button
