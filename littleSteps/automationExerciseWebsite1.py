@@ -9,10 +9,10 @@ from selenium.webdriver.chrome.options import Options
 from faker import Faker
 fake = Faker()
 
-options = Options()
-options.add_experimental_option("detach", True)
+# options = Options()
+# options.add_experimental_option("detach", True)
 # 1. Launch browser
-driver = webdriver.Chrome(options=options)
+driver = webdriver.Chrome()
 driver.implicitly_wait(10)
 driver.maximize_window()
 # 2. Navigate to url 'http://automationexercise.com'
@@ -57,15 +57,25 @@ assert expectedText.is_displayed()
 genderRadioButton = driver.find_element(By.ID, "id_gender1")
 fakePassword = fake.password()
 actions = ActionChains(driver)
+time.sleep(3)
 actions.move_to_element(genderRadioButton).click().send_keys(Keys.TAB).send_keys(Keys.TAB).send_keys(fakePassword).perform()
+time.sleep(3)
 actions.send_keys(Keys.TAB).send_keys(Keys.ARROW_DOWN).send_keys(Keys.TAB).send_keys(Keys.ARROW_DOWN).send_keys(Keys.TAB).perform()
-actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.TAB).send_keys(Keys.TAB).send_keys(Keys.TAB).perform()
-actions.send_keys(Keys.TAB).send_keys(fake.name()).send_keys(Keys.TAB).send_keys(fake.address()).send_keys(Keys.TAB).perform()
-actions.send_keys(fakeName).send_keys(Keys.TAB).send_keys(fakeName).send_keys(Keys.TAB).send_keys(Keys.ARROW_DOWN).perform()
+time.sleep(3)
+actions.send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.TAB).click().send_keys(Keys.TAB).click().send_keys(Keys.TAB).perform()
+time.sleep(3)
+actions.send_keys(fake.first_name()).send_keys(Keys.TAB).send_keys(fake.last_name()).send_keys(Keys.TAB).send_keys(fake.name()).send_keys(Keys.TAB).perform()
+time.sleep(3)
+actions.send_keys(fake.address()).send_keys(Keys.TAB).send_keys(Keys.TAB).send_keys(Keys.ARROW_DOWN).perform()
+time.sleep(3)
 actions.send_keys(Keys.TAB).send_keys(fake.city()).send_keys(Keys.TAB).send_keys(fake.city()).send_keys(Keys.TAB).perform()
+time.sleep(3)
 actions.send_keys("1234").send_keys(Keys.TAB).send_keys("+905555555555").send_keys(Keys.TAB).click().perform()
+time.sleep(3)
 
-#There is some problem in actions section, Maybe its about chrome options
+time.sleep(5)
+
+#I think dont go with actions, directly take locators next time
 
 # 14. Verify that 'ACCOUNT CREATED!' is visible
 # 15. Click 'Continue' button
