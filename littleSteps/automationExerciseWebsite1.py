@@ -10,17 +10,18 @@ from faker import Faker
 
 fake = Faker()
 
-# options = Options()
-# options.add_experimental_option("detach", True)
+options = Options()
+options.add_experimental_option("detach", True)
 # 1. Launch browser
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(options=options)
 driver.implicitly_wait(10)
 driver.maximize_window()
 
 
-def add_close_method():
-    close_button = driver.find_element(By.XPATH, "//*[@id='dismiss-button']/div/svg/path[1]")
+def add_close_method(driver):
+    close_button = driver.find_element(By.XPATH, "//*[@id='dismiss-button']")
     close_button.click()
+    driver.switch_to.parent_frame()
 
 
 # 2. Navigate to url 'http://automationexercise.com'
@@ -37,14 +38,13 @@ assert actualTitle.__contains__(expectedTitle)
 signupButton = driver.find_element(By.XPATH, "//*[@id='header']/div/div/div/div[2]/div/ul/li[4]")
 signupButton.click()
 
-
 # 5. Verify 'New User Signup!' is visible
 newUserSignupText = driver.find_element(By.XPATH, "//*[@id='form']/div/div/div[3]/div/h2")
 time.sleep(2)
 try:
     assert newUserSignupText.is_displayed()
 except:
-    add_close_method()
+    add_close_method(driver)
     assert newUserSignupText.is_displayed()
 
 # 6. Enter name and email address
@@ -59,14 +59,13 @@ signUpEmailBox.send_keys(fakeEmailAddress)
 # 7. Click 'Signup' button
 driver.find_element(By.XPATH, "//*[@*='signup-button']").click()
 
-
 # 8. Verify that 'ENTER ACCOUNT INFORMATION' is visible
 expectedText = driver.find_element(By.XPATH, "//*[@id='form']/div/div/div/div/h2/b")
 time.sleep(2)
 try:
     assert expectedText.is_displayed()
 except:
-    add_close_method()
+    add_close_method(driver)
     assert expectedText.is_displayed()
 
 # 9. Fill details: Title, Name, Email, Password, Date of birth
@@ -127,12 +126,24 @@ time.sleep(2)
 try:
     assert accountCreatedText.is_displayed()
 except:
-    add_close_method()
+    add_close_method(driver)
     assert accountCreatedText.is_displayed()
 
 # 15. Click 'Continue' button
 continueButton = driver.find_element(By.XPATH, "//*[@*='continue-button']")
-continueButton.click()
+try:
+    continueButton.click()
+except:
+    add_close_method(driver)
+    continueButton.click()
+
+time.sleep(2)
+iframe = driver.find_element(By.XPATH, "//*[@id='ad_iframe']")
+driver.switch_to.frame(iframe)
+close_button = driver.find_element(By.XPATH, "//*[@id='dismiss-button']")
+close_button.click()
+driver.switch_to.parent_frame()
+
 
 # 16. Verify that 'Logged in as username' is visible
 username = driver.find_element(By.XPATH, "//*[@id='header']/div/div/div/div[2]/div/ul/li[10]/a")
@@ -140,7 +151,7 @@ time.sleep(2)
 try:
     assert username.is_displayed()
 except:
-    add_close_method()
+    add_close_method(driver)
     assert username.is_displayed()
 
 # 17. Click 'Delete Account' button
@@ -153,7 +164,7 @@ time.sleep(2)
 try:
     assert account_deleted_text.is_displayed()
 except:
-    add_close_method()
+    add_close_method(driver)
     assert account_deleted_text.is_displayed()
 
 continueButton.click()
