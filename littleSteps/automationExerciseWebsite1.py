@@ -141,13 +141,11 @@ time.sleep(5)
 # iframe = driver.find_element(By.XPATH, "//*[@id='mys-content']")
 # driver.switch_to.frame(iframe)
 # switch to parent iframe
-driver.switch_to.frame(driver.find_element(By.ID, "google_esf"))
+# driver.switch_to.frame(driver.find_element(By.ID, "google_esf"))
 time.sleep(2)
-driver.switch_to.frame(driver.find_element(By.XPATH, "//*[@id='aswift_1']"))
-# switch to child iframe
-driver.switch_to.frame(driver.find_element(By.ID, "ad_iframe"))
+driver.switch_to.frame(2)
 
-close_button = driver.find_element(By.XPATH, "//*[@id='dismiss-button']")
+close_button = driver.find_element('id', 'dismiss-button')
 close_button.click()
 driver.switch_to.parent_frame()
 
