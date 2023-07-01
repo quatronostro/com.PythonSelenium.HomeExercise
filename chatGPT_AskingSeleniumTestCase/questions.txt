@@ -3,12 +3,12 @@ ChatGPT
 Certainly! Here are five complex test cases along with the steps you should follow to implement them using Selenium with Java and JUnit:
 
 Test Case 1:
-Website: www.amazon.com
+Website: www.hepsiburada.com
 Objective: Search for a product, apply filters, and add it to the cart.
 
 Steps:
 
-Launch the browser and navigate to www.amazon.com.
+Launch the browser and navigate to www.hepsiburada.com.
 Enter a specific product name in the search bar and search it.
 Apply relevant filters, such as price range or customer ratings.
 Select a product from the search results.

@@ -59,3 +59,7 @@ if __name__ == '__main__':
     verify_page_is_displayed()
     add_product_to_cart()
     verify()
+
+
+
+## This code will stop here bc amazon implement some Captcha and we cant pass it. So I will try this case with another website
