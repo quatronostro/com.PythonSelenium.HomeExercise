@@ -5,7 +5,7 @@ from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-
+from selenium.webdriver.chrome.options import Options
 
 # Test Case 1:
 # Website: www.hepsiburada.com
@@ -19,9 +19,9 @@ def launch_browser_navigate_website(url):
 def enter_specific_product_to_search():
     driver.find_element(By.ID, cookies_id).click()
     time.sleep(3)
-    search_bar = driver.find_element(By.CLASS_NAME, search_bar_xpath)
-    wait.until(EC.element_to_be_clickable(search_bar))
+    search_bar = driver.find_element(By.XPATH, search_bar_xpath)
     search_bar.click()
+    time.sleep(3)
     search_bar.send_keys("samsung" + Keys.ENTER)
 
 # Apply relevant filters, such as price range or customer ratings.
@@ -55,7 +55,7 @@ def verify():
 if __name__ == '__main__':
     url = "https://www.hepsiburada.com"
     cookies_id = 'onetrust-accept-btn-handler'
-    search_bar_xpath = "//input[@type='text']"
+    search_bar_xpath = '//*[@id="SearchBoxOld_b67b1b9d-2e83-487e-663a-c4408335bf4c"]/div/div/div[1]/div[2]'
     price_range_lowest = "//*[@id='fiyat']/div/div/div/div[1]/div/div[1]/input"
     price_range_highest = "//*[@id='fiyat']/div/div/div/div[1]/div/div[2]/input"
     price_search_button = '//*[@id="fiyat"]/div/div/div/div[1]/button'
@@ -63,7 +63,10 @@ if __name__ == '__main__':
     add_to_cart = 'addToCart'
     verify_text = '//*[@id="AddToCart_ef7b01a3-4fbb-4952-42be-fb20fef0eb55"]/div/div/div/div/div/div[1]/div/div[1]/div/div[1]/div/span'
 
-    driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2})
+
+    driver = webdriver.Chrome(chrome_options)
     driver.implicitly_wait(10)
     driver.maximize_window()
 
