@@ -19,10 +19,11 @@ def launch_browser_navigate_website(url):
 def enter_specific_product_to_search():
     driver.find_element(By.ID, cookies_id).click()
     time.sleep(3)
+
     search_bar = driver.find_element(By.XPATH, search_bar_xpath)
     search_bar.click()
     time.sleep(3)
-    search_bar.send_keys("samsung" + Keys.ENTER)
+    driver.find_element(By.XPATH, "//input[@type='text']").send_keys("samsung" + Keys.ENTER)
 
 # Apply relevant filters, such as price range or customer ratings.
 def apply_filter():
@@ -32,11 +33,10 @@ def apply_filter():
 
 # Select a product from the search results.
 def select_product():
+    time.sleep(2)
     driver.find_element(By.XPATH, first_product).click()
     all_window_handles = driver.window_handles
-    original_WH = all_window_handles[0]
-    product_WH = all_window_handles[1]
-    driver.switch_to.window(product_WH)
+    driver.switch_to.window(all_window_handles[1])
 
 # Verify that the product page is displayed.
 def verify_page_is_displayed():
@@ -50,18 +50,20 @@ def add_product_to_cart():
 # Verify that the product is successfully added to the cart.
 def verify():
     verify_element = driver.find_element(By.XPATH, verify_text)
+    wait.until(EC.visibility_of(verify_element))
+
     assert verify_element.is_displayed()
 
 if __name__ == '__main__':
     url = "https://www.hepsiburada.com"
     cookies_id = 'onetrust-accept-btn-handler'
-    search_bar_xpath = '//*[@id="SearchBoxOld_b67b1b9d-2e83-487e-663a-c4408335bf4c"]/div/div/div[1]/div[2]'
+    search_bar_xpath = "//*[@class='sf-OldHeader-MSHyIpigOpMg8jl1slwR']"
     price_range_lowest = "//*[@id='fiyat']/div/div/div/div[1]/div/div[1]/input"
     price_range_highest = "//*[@id='fiyat']/div/div/div/div[1]/div/div[2]/input"
     price_search_button = '//*[@id="fiyat"]/div/div/div/div[1]/button'
-    first_product = '//*[@id="i0"]'
+    first_product = "//*[@data-test-id='product-card-name'][1]"
     add_to_cart = 'addToCart'
-    verify_text = '//*[@id="AddToCart_ef7b01a3-4fbb-4952-42be-fb20fef0eb55"]/div/div/div/div/div/div[1]/div/div[1]/div/div[1]/div/span'
+    verify_text = "//span[text()=' Ürün sepetinizde']"
 
     chrome_options = Options()
     chrome_options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2})
