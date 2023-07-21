@@ -1,5 +1,9 @@
+import time
+
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 # Test Case 2:
@@ -14,24 +18,16 @@ def launch_browser_navigate_website(url):
 
 # Click on the "Sign In" button.
 # Select the "Sign Up" option.
+# Enter valid information details, including name, email, and password.
+# Access your profile and verify that the user is logged in.
 def sign_up_action():
+    actions = ActionChains(driver)
+
     driver.find_element(By.XPATH, "//button[text()='Accept']").click() #Cookies Accept button
     driver.find_element(By.XPATH, "//a[text()='Sign In']").click() #Sign In button
 
     emailBox = driver.find_element(By.XPATH, "//*[@for='id_userLoginId']")
-    emailBox.send_keys("mbaramuk@hotmail.com")
-    passwordBox = driver.find_element(By.XPATH, "//*[@for='id_password']")
-    passwordBox.send_keys("Muz994599 ")
-
-    driver.find_element(By.XPATH, "//*[@type='submit']").click() #submit button
-
-# Enter valid information details, including name, email, and password.
-def enter_valid_info():
-    pass
-
-# Access your profile and verify that the user is logged in.
-def verify_login():
-    pass
+    actions.click(emailBox).send_keys("mbaramuk@hotmail.com").send_keys(Keys.TAB).send_keys("Muz994599").send_keys(Keys.TAB).send_keys(Keys.TAB).send_keys(Keys.ENTER).perform()
 
 # Perform a search for a specific TV show.
 def search():
