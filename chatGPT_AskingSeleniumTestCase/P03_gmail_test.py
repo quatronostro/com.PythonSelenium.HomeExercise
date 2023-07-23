@@ -17,8 +17,10 @@ def launch_browser_navigate_website(url):
 # Enter valid login credentials and click on the "Sign In" button.
 # Verify that the user is successfully logged in.
 def user_login(email, password):
+    time.sleep(2)
     email_box = driver.find_element(By.ID, "identifierId")
     email_box.send_keys(email)
+    time.sleep(2)
 
     driver.find_element(By.XPATH, "(//*[@jsname='V67aGc'])[2]").click() # Next button
     time.sleep(5)
@@ -42,10 +44,11 @@ def attach_file():
 def send_mail_and_verify():
     pass
 
+
 if __name__ == '__main__':
     url = "https://www.gmail.com"
     email = "b.baramuk@gmail.com"
-    password = "0990.0110.Berke"
+    password = "*****"
 
     driver = webdriver.Chrome()
     driver.implicitly_wait(10)
